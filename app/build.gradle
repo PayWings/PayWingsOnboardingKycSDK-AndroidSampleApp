@@ -11,8 +11,8 @@ android {
         applicationId "com.paywings.onboarding.kyc.android.sample_app"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 20
+        versionName "4.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //PayWings Android SDK
-    implementation 'com.paywings.onboarding.kyc:android-sdk:1.0.0'
+    implementation 'com.paywings.onboarding.kyc:android-sdk:4.0.0'
 
     //Retrofit2
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
