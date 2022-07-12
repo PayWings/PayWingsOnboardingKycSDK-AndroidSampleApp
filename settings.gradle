@@ -1,0 +1,24 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url "D:/Maven local/repo" }
+        maven { url "https://maven.pkg.github.com/paywings/integration"
+            credentials {
+                username = "PayWings-Integration"
+                password = "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"//"@CheckDocumentationForValidToken"
+            }
+        }
+    }
+}
+rootProject.name = "PayWingsOnboardingKycAndroidSdkSampleApp"
+include ':app'

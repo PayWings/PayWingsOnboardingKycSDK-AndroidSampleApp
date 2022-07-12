@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3d5afe</color>
+    <color name="colorPrimaryDark">#0031ca</color>
+    <color name="colorAccent">#8187ff</color>
+    <color name="colorOnAccent">#ffffff</color>
+
+    <!--Colors for video instruction part -->
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorOnBackgroundText">#000000</color>
+    <color name="colorOnBackgroundTitle">#3d5afe</color>
+
+    <!--Colors for photo capture button -->
+    <color name="colorPhotoCaptureButton">#e0e0e0</color>
+    <color name="colorOnPhotoCaptureButtonNormal">#2196f3</color>
+    <color name="colorOnPhotoCaptureButtonPressed">#1976d2</color>
+</resources>

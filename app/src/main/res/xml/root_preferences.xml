@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/sdk_endpoint">
+
+        <EditTextPreference
+            app:key="sdkEndpointUrl"
+            app:title="@string/url_title"
+            app:defaultValue="https://onboarding-kyc-dev.paywings.io/mobile/"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="sdkEndpointUsername"
+            app:title="@string/username_title"
+            app:defaultValue="111"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="sdkEndpointPassword"
+            app:title="@string/password_title"
+            app:defaultValue="222"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sdk_settings">
+
+        <EditTextPreference
+            app:key="referenceNumber"
+            app:title="@string/reference_number"
+            app:defaultValue=""
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:key="language"
+            app:defaultValue="en"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:title="@string/language_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/user_data">
+
+        <EditTextPreference
+            app:key="userDataFirstName"
+            app:title="@string/first_name_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataMiddleName"
+            app:title="@string/middle_name_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataLastName"
+            app:title="@string/last_name_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataEmail"
+            app:title="@string/email_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataMobileNumber"
+            app:title="@string/mobile_number_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataAddress1"
+            app:title="@string/address1_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataAddress2"
+            app:title="@string/address2_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataAddress3"
+            app:title="@string/address3_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataZipCode"
+            app:title="@string/zip_code_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataCity"
+            app:title="@string/city_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataState"
+            app:title="@string/state_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDataCountry"
+            app:title="@string/country_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
