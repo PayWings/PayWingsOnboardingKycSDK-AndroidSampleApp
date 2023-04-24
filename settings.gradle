@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
+        maven { url "https://jitpack.io" }
         //maven { url "/Users/petermernik/Work/Development/MavenLocal/Repo" }
         maven { url "https://maven.pkg.github.com/paywings/integration"
             credentials {

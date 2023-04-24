@@ -1,5 +1,6 @@
 package com.paywings.onboarding.kyc.android.sample_app.network
 
+/*
 import com.google.gson.GsonBuilder
 import com.paywings.onboarding.kyc.android.sample_app.model.GetKYCDataRequest
 import com.paywings.onboarding.kyc.android.sample_app.model.GetKYCDataResponse
@@ -43,3 +44,5 @@ interface OnboardingKycWhiteLabelApiService {
         }
     }
 }
+
+ */

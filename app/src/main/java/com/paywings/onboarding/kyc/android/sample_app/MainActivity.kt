@@ -1,104 +1,71 @@
 package com.paywings.onboarding.kyc.android.sample_app
 
-import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
-import com.paywings.onboarding.kyc.android.sample_app.databinding.ActivityMainBinding
-import com.paywings.onboarding.kyc.android.sdk.PayWingsOnboardingKyc
-import com.paywings.onboarding.kyc.android.sdk.data.model.KycCredentials
-import com.paywings.onboarding.kyc.android.sdk.data.model.KycSettings
-import com.paywings.onboarding.kyc.android.sdk.data.model.KycUserData
-import com.paywings.onboarding.kyc.android.sdk.util.PayWingsOnboardingKycResult
-import java.util.*
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.navigation.compose.rememberNavController
+import com.paywings.onboarding.kyc.android.sample_app.network.NetworkState
+import com.paywings.onboarding.kyc.android.sample_app.ui.nav.graph.StartUpNavGraph
+import com.paywings.onboarding.kyc.android.sample_app.ui.theme.PayWingsOnboardingKycTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
 
-    lateinit var prefs: SharedPreferences
-    private lateinit var binding: ActivityMainBinding
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "KycSettings")
 
-    companion object {
-        const val  KYC_SDK_ACTIVITY_REQUEST_CODE = 1
-    }
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var networkState: NetworkState
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Handle the splash screen transition.
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        setDefaultSettings()
-
-        binding.btnStartKyc.setOnClickListener {
-            PayWingsOnboardingKyc.startKyc(this@MainActivity,
-                KYC_SDK_ACTIVITY_REQUEST_CODE,
-                KycCredentials(prefs.getString("sdkEndpointUrl", "")!!, prefs.getString("sdkEndpointUsername", "")!!, prefs.getString("sdkEndpointPassword", "")!!),
-                KycSettings(UUID.randomUUID().toString(), prefs.getString("language", "en")!!, prefs.getString("referenceNumber", null)),
-                KycUserData(prefs.getString("userDataFirstName", "")!!, prefs.getString("userDataMiddleName", "")!!, prefs.getString("userDataLastName", "")!!, prefs.getString("userDataEmail", "")!!,   prefs.getString("userDataMobileNumber", "")!!, prefs.getString("userDataAddress1", "")!!
-                    , prefs.getString("userDataAddress2", "")!!, prefs.getString("userDataAddress3", "")!!, prefs.getString("userDataZipCode", "")!!, prefs.getString("userDataCity", "")!!, prefs.getString("userDataState", "")!!, prefs.getString("userDataCountry", "")!!)
-            )
-        }
-
-        binding.tvVersion.text = BuildConfig.VERSION_NAME.toString()
+        networkState.start()
+        setActivityContent()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onDestroy() {
+        super.onDestroy()
+        networkState.destroy()
+    }
 
-        if (requestCode == KYC_SDK_ACTIVITY_REQUEST_CODE) {
-            when(val result = PayWingsOnboardingKyc.getKycResult(data!!)) {
-                is PayWingsOnboardingKycResult.Success -> {
+    private fun setActivityContent() {
+        setContent {
+            PayWingsOnboardingKycTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
 
-                    binding.tvStatus.text = "Successfull"
-                    binding.tvStatus.setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_green_dark))
-                    binding.tvKycReferenceID.text = result.kycReferenceID?:""
-                    binding.tvReferenceNumber.text = result.referenceNumber?:""
-                    binding.tvPersonID.text = result.personID?:""
-                    binding.tvKycID.text = result.kycID?:""
-
-                }
-                is PayWingsOnboardingKycResult.Failure -> {
-                    binding.tvStatus.text = "Failed with status code: %s (%s)".format(result.statusCode, result.statusDescription)
-                    binding.tvStatus.setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_red_dark))
-                    binding.tvKycReferenceID.text = result.kycReferenceID?:""
-                    binding.tvReferenceNumber.text = result.referenceNumber?:""
-                    binding.tvPersonID.text = result.personID?:""
-                    binding.tvKycID.text = result.kycID?:""
+                    StartUpNavGraph(
+                        navController,
+                        onCloseApp = { onCloseApp() }
+                    )
                 }
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        return true
+    private fun onCloseApp() {
+        finishAndRemoveTask()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_settings) {
-            startActivity(Intent(this, SettingsActivity::class.java))
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setDefaultSettings() {
-
-        if (!prefs.getBoolean("settingsSet", false)) {
-            val editor = prefs.edit()
-            editor.putString("sdkEndpointUrl", "https://onboarding-kyc-dev.paywings.io/mobile/")
-            editor.putString("sdkEndpointUsername", "111")
-            editor.putString("sdkEndpointPassword", "222")
-            editor.putString("language", "en")
-            editor.putBoolean("settingsSet", true)
-            editor.commit()
-        }
-
-    }
 }

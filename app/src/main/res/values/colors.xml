@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3d5afe</color>
-    <color name="colorPrimaryDark">#0031ca</color>
-    <color name="colorAccent">#8187ff</color>
-    <color name="colorOnAccent">#ffffff</color>
+    <color name="secondary">#FF80D6FF</color>
+    <color name="primary">#FF1976D2</color>
+    <color name="primaryVariant">#FF0D47A1</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
     <!--Colors for video instruction part -->
     <color name="colorBackground">#ffffff</color>
