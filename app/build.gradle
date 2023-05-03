@@ -16,7 +16,7 @@ android {
         minSdk 23
         targetSdk 33
         versionCode 22
-        versionName "4.2.3"
+        versionName "4.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -88,7 +88,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling:1.4.2'
 
     //PayWings Android SDK
-    implementation 'com.paywings.onboarding.kyc:android-sdk:4.2.0'
+    implementation 'com.paywings.onboarding.kyc:android-sdk:4.3.0'
     implementation 'com.paywings.oauth:android-sdk:1.2.2'
 
     //Retrofit2

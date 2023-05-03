@@ -8,6 +8,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -47,24 +48,27 @@ class MainActivity : ComponentActivity() {
 
     private fun setActivityContent() {
         setContent {
+            val navController = rememberNavController()
+            val onCloseApp: () -> Unit = remember {
+                return@remember { closeApp() }
+            }
+
             PayWingsOnboardingKycTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-
                     StartUpNavGraph(
                         navController,
-                        onCloseApp = { onCloseApp() }
+                        onCloseApp = onCloseApp
                     )
                 }
             }
         }
     }
 
-    private fun onCloseApp() {
+    private fun closeApp() {
         finishAndRemoveTask()
     }
 

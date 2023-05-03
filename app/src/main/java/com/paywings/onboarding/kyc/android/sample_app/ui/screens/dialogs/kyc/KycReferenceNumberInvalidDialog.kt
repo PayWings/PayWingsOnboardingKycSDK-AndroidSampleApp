@@ -34,19 +34,24 @@ fun Preview_KycReferenceNumberInvalidDialog() {
 @Composable
 fun KycReferenceNumberInvalidDialog(
     dialogState: MaterialDialogState,
-    onCloseButton: (() -> Unit)? = null,
+    onCloseButton: ((dialogState: MaterialDialogState) -> Unit)? = null
 ) {
-    val hideDialog: () -> Unit = remember {
-        return@remember { dialogState.takeIf { it.showing }?.hide() }
+    val dismissRequest: () -> Unit = remember {
+        return@remember {
+            when (onCloseButton != null) {
+                true -> onCloseButton(dialogState)
+                false -> dialogState.takeIf { it.showing }?.hide()
+            }
+        }
     }
 
     MaterialDialog(
         dialogState = dialogState,
         autoDismiss = false,
         shape = MaterialTheme.shapes.dialog,
-        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false, usePlatformDefaultWidth = false),
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true, usePlatformDefaultWidth = false),
         buttons = {
-            negativeButton(res = R.string.button_close, onClick = { onCloseButton?:hideDialog })
+            negativeButton(res = R.string.button_close, onClick = dismissRequest)
         }
     ) {
         KycReferenceNumberInvalidDialogContent()
