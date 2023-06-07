@@ -15,7 +15,7 @@ object Constants {
     internal const val SETTINGS_PREFERENCE_KEY_REFERENCE_NUMBER = "referenceNumber"
 
 
-    internal const val DEFAULT_OAUTH_API_KEY = "ba337ff0-925a-46be-8c16-1cca65a30a1b"
+    internal const val DEFAULT_OAUTH_API_KEY = "a44c8894-d54f-4eb5-a8ce-276b7ec8eaed"
     internal const val DEFAULT_OAUTH_DOMAIN = "paywings.io"
 
 
